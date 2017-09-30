@@ -77,7 +77,7 @@ def plotFreq(data, column_list, cutoff = -1):
             data[column_list[i]].value_counts()[:cutoff].plot(kind='barh')
         plt.title(tit,x=0.6,y=0.6)
         
-def getTransitMetrics(origin, destination):
+def getTransitMetrics(origin, destination, gmaps_api_key):
     """
     Takes origin and destination and returns distance in kilometers, and time in hours
     """
@@ -85,10 +85,9 @@ def getTransitMetrics(origin, destination):
                 
     # Find the URL to communicate with google
     #link here: https://developers.google.com/maps/documentation/distance-matrix/
-    main_api = 'https://maps.googleapis.com/maps/api/distancematrix/json?'
+    #main_api = 'https://maps.googleapis.com/maps/api/distancematrix/json?'
     
-    API_KEY = 'AIzaSyD1_jwiSwQmIMfmiLCh6KfkOAQi_kJ9Xyw'
-    gmaps = googlemaps.Client(key=API_KEY)
+    gmaps = googlemaps.Client(key=gmaps_api_key)
     results = gmaps.distance_matrix(origin, destination)
     dist = results['rows'][0]['elements'][0]['distance']['value']/float(1000)
     time = results['rows'][0]['elements'][0]['duration']['value']/float(3600)
@@ -502,9 +501,9 @@ def generate_factory_location_features(main_data):
         cntnt = getAddress(ctry)[2]
         factory.iloc[i]['origin_country'] = ctry
         factory.iloc[i]['origin_continent'] = cntnt
-    #import os
-    #path = os.curdir+'\Data\Features\\'
-    #factory.to_csv(path+"factory_country_continent.csv")
+    import os
+    path = os.curdir+'\Data\Features\\'
+    factory.to_csv(path+"factory_country_continent.csv")
     print("factory shape: ",factory.shape)
     factory.head()
 
