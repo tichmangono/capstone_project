@@ -53,7 +53,7 @@ def getAddress(entity, continent_dict=CONTINENT_DICT):
     country_l = json_data['results'][0]['address_components'][i]['long_name']
     continent = continent_dict[country_s]
     return formatted_address, country_l, continent
-    #getAddress('Zimbabwe')
+    #getAddress('Harvard, MA')
         
 def plotFreq(data, column_list, cutoff = -1):
     """
@@ -671,7 +671,8 @@ def train_test_oversample(X, y, test_size=0.35, use_smote=False):
     from imblearn.over_sampling import SMOTE
     from sklearn.model_selection import train_test_split
     # Train-Test split
-    X_tr_clf_res, X_ts_clf_res, y_tr_clf_res, y_ts_clf_res = train_test_split(X,y,test_size=test_size, random_state=121 )
+    X_tr_clf_res, X_ts_clf_res, y_tr_clf_res, y_ts_clf_res = train_test_split(
+            X,y,test_size=test_size, random_state=121)
 
     smote = SMOTE(random_state=121, ratio = 1.0)
     print("XTrain, yTrain shapes BEFORE Oversampling: {} and {}".format(X_tr_clf_res.shape, y_tr_clf_res.shape))
